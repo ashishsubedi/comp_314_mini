@@ -16,26 +16,33 @@ def dijkstra(G: nx.Graph,s,dest):
   
     d = {}
     for v in G.nodes:
-        d[v] = 0 if s == v else math.inf
+        d[v] = 0 if s == v else math.inf #O(V)
 
 
-    Q = OrderedDict(sorted(d.items(),key=lambda t: t[1]))
+    Q = OrderedDict(sorted(d.items(),key=lambda t: t[1])) #VlogV
 
     while len(Q)>0:
-        v,_ = Q.popitem(last=False)
+        # Q = OrderedDict(sorted(Q.items(),key=lambda t: t[1])) #O(VLogV)
+        #O(V) as pop for Q is O(1)
+        v,_ = min(Q.items(),key=lambda t:t[1])
+        Q.pop(v)
         
-        for u in G[v]:
+        #Total for below : O(E)
+        for u in G[v]: #O(E)
             if(d[v]+G[v][u]['weight'] <= d[u] and d[v] != math.inf):
                 d[u] = d[v]+G[v][u]['weight']
                 Q[u] = d[u]
 
-                Q = OrderedDict(sorted(Q.items(),key=lambda t: t[1]))
+                
 
-
+    #Total for whole = O(V+VlogV+E)
+    # (E+1)VLogV+2V
+    # EVLogV
     
     if(dest == 'all'):
     
         costDict = {}
+        #O(V)
         for u in G.nodes:
             costDict[u] = d[u]
         return {
@@ -72,7 +79,7 @@ def dijkstraV2(G: nx.Graph,s,dest):
                 d[u] = d[v]+G[v][u]['weight']
                 heapq.heappush(pq,(d[u],u))
 
-                
+    #ELogV 
     
     if(dest == 'all'):
     
@@ -106,13 +113,14 @@ def avg_shortest_path(G:nx.Graph):
     vertices = set(sorted(G.nodes))
     totalPathLength = 0
     for i in G.nodes:
+        #EV^2LogV
         pathLength = 0
 
-        result = dijkstra(G,i,'all')
+        result = dijkstra(G,i,'all')#EVLogV
 
         vertices.remove(i)
         
-        for j in vertices:
+        for j in vertices: #O(V)
             
             pathLength += result['cost'][j]
 
