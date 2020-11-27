@@ -52,20 +52,20 @@ def loadRandomGraphM(nV: int, nE: float, weighted=False, weightRange=(1,10)) -> 
     p = 1/nV
     countEdge = 0
 
-    while True:
-        for u in G.nodes():
-            for v in G.nodes():
-                if u != v: # No self loop allowed
-                    if random.random() <= p and (u,v) not in G.edges():
-                        if(weighted):
-                            assert len(weightRange) == 2, f"Weight Range doesn't have 2 values {weightRange}"
-                            w = random.randint(weightRange[0],weightRange[1])
-                            G.add_edge(str(u),str(v),weight=float(w))
-                        else:
-                            G.add_edge(str(u),str(v),weight=float(1))
-                        countEdge += 1
-                        if countEdge >= nE:
-                            return G
+    while countEdge < nE:
+        u = random.sample(G.nodes,1)[0]
+        v = random.sample(G.nodes,1)[0]
+        if u != v and (u,v) not in G.edges(): # No self loop allowed
+            if random.random() <= p :
+                if(weighted):
+                    assert len(weightRange) == 2, f"Weight Range doesn't have 2 values {weightRange}"
+                    w = random.randint(weightRange[0],weightRange[1])
+                    G.add_edge(str(u),str(v),weight=float(w))
+                else:
+                    G.add_edge(str(u),str(v),weight=float(1))
+                countEdge += 1
+                if countEdge >= nE:
+                    return G
         
 
 

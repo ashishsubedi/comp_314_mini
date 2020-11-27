@@ -4,13 +4,13 @@ import GraphLoader
 import Algorithm
 import time
 
-nV = 5
-# nE = 20
+nV = 10
+nE = 10
 p = 0.4
 
 
-G = GraphLoader.loadRandomGraphP(nV,p,weighted=True)
-# G = GraphLoader.loadRandomGraphM(nV,nE,weighted=False)
+# G = GraphLoader.loadRandomGraphP(nV,p,weighted=True)
+G = GraphLoader.loadRandomGraphM(nV,nE,weighted=False)
 
 
 print(G.nodes)

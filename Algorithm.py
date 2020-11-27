@@ -35,9 +35,9 @@ def dijkstra(G: nx.Graph,s,dest):
 
                 
 
-    #Total for whole = O(V+VlogV+E)
-    # (E+1)VLogV+2V
-    # EVLogV
+    #Total for whole = O(V+V^2+E)
+    # E+V^2
+    #V^2
     
     if(dest == 'all'):
     
@@ -113,7 +113,7 @@ def avg_shortest_path(G:nx.Graph):
     vertices = set(sorted(G.nodes))
     totalPathLength = 0
     for i in G.nodes:
-        #EV^2LogV
+        #V*(E+VLogV)
         pathLength = 0
 
         result = dijkstra(G,i,'all')#EVLogV
